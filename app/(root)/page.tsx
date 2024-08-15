@@ -3,12 +3,8 @@ import RightSidebar from "@/components/RightSidebar";
 import TotalBalanceBox from "@/components/TotalBalanceBox";
 import React from "react";
 
-const Home = () => {
-  const loggedIn = {
-    firstName: "Chinthaka",
-    lastName: 'Dinadasa',
-    email: 'sendtoclabz@gmail.com'
-  };
+const Home = async () => {
+  const loggedIn = {firstName: 'Chinthaka', lastName: 'Dinadasa'}
   return (
     <section className="home">
       <div className="home-content">
@@ -16,7 +12,7 @@ const Home = () => {
           <HeaderBox
             type="greeting"
             title="Welcome"
-            user={loggedIn.firstName || "Guest"}
+            user={loggedIn?.firstName || "Guest"}
             subtext="Access and manage your account and transactions efficiently."
           />
           <TotalBalanceBox
