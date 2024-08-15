@@ -10,7 +10,7 @@ const Footer = ({ user, type = 'Desktop' }: FooterProps) => {
 
   const handleLogout = async () => {
     const loggedOut = await logoutAccount();
-    if (loggedOut) router.push('/sign-in');
+    // if (loggedOut) router.push('/sign-in');
   }
 
   return (
@@ -27,7 +27,7 @@ const Footer = ({ user, type = 'Desktop' }: FooterProps) => {
         <p className="text-14 truncate font-normal text-gray-600">
           {user.email}
         </p>
-        <div className="footer_image" onClick={handleLogout()}>
+        <div className="footer_image">
           <Image src="/icons/logout.svg" fill alt="logout"/>
         </div>
       </div>
