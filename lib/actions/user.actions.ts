@@ -8,8 +8,14 @@ import { parseStringify } from "../utils"
 export const signIn = async (userData: signInProps) => {
     try {
         const { account } = await createAdminClient();
-        const sessionData = await account.createEmailPasswordSession(userData.email, userData.password);
-        return parseStringify(sessionData)
+        const session = await account.createEmailPasswordSession(userData.email, userData.password);
+        cookies().set("banking-core-session", session.secret, {
+            path: "/",
+            httpOnly: true,
+            sameSite: "strict",
+            secure: true,
+        });
+        return parseStringify(session)
     } catch (error) {
         console.log(error)
     }
@@ -44,6 +50,7 @@ export async function getLoggedInUser() {
         const userData = await account.get();
         return parseStringify(userData)
     } catch (error) {
+        console.log(error);
         return null;
     }
 }
@@ -52,7 +59,7 @@ export const logoutAccount = async () => {
     try {
         const { account } = await createSessionClient();
         cookies().delete('banking-core-session')
-        await account.deleteSession('current');
+        return await account.deleteSession('current');
     } catch (error) {
         return null
     }
