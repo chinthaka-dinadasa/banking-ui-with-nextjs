@@ -1,6 +1,6 @@
 'use server'
 
-import { ID } from "node-appwrite"
+import { ID, Query } from "node-appwrite"
 import { createAdminClient, createSessionClient } from "../appwrite"
 import { cookies } from "next/headers"
 import { encryptId, extractCustomerIdFromUrl, parseStringify } from "../utils"
@@ -126,7 +126,7 @@ export const createBankAccount = async ({
     accountId,
     accessToken,
     fundingSourceUrl,
-    sharableId
+    shareableId
 }: createBankAccountProps) => {
     try {
         const { database } = await createAdminClient();
@@ -140,7 +140,7 @@ export const createBankAccount = async ({
                 accountId,
                 accessToken,
                 fundingSourceUrl,
-                sharableId
+                shareableId
             }
         );
     } catch (error) {
@@ -188,12 +188,12 @@ export const exchangePublicToken = async ({ publicToken, user }: exchangePublicT
   
       // Create a bank account using the user ID, item ID, account ID, access token, funding source URL, and shareableId ID
       await createBankAccount({
-        userId: user.$id,
+        userId: user.userId,
         bankId: itemId,
         accountId: accountData.account_id,
         accessToken,
         fundingSourceUrl,
-        sharableId: encryptId(accountData.account_id),
+        shareableId: encryptId(accountData.account_id),
       });
   
       // Revalidate the path to reflect the changes
@@ -205,5 +205,34 @@ export const exchangePublicToken = async ({ publicToken, user }: exchangePublicT
       });
     } catch (error) {
         console.error(error)
+    }
+}
+
+export const getBanks = async ({userId}: getBanksProps) => {
+    console.log(`Requesting user id ${userId}`)
+    try {
+        const {database} = await createAdminClient()
+        const banks = await database.listDocuments(
+            DATABASE_ID!,
+            BANK_COLLECTION_ID!,
+            [Query.equal('userId', [userId])]
+        )
+        return parseStringify(banks.documents)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const getBank = async ({documentId}: getBankProps) => {
+    try {
+        const {database} = await createAdminClient()
+        const bank = await database.listDocuments(
+            DATABASE_ID!,
+            BANK_COLLECTION_ID!,
+            [Query.equal('$id', [documentId])]
+        )
+        return parseStringify(bank.documents[0])
+    } catch (error) {
+        console.log(error)
     }
 }
