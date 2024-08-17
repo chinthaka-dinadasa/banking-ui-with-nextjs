@@ -22,7 +22,6 @@ export const getAccounts = async ({ userId }: getAccountsProps) => {
     const banks = await getBanks({ userId });
     const accounts = await Promise.all(
       banks?.map(async (bank: Bank) => {
-        console.log(`Bank access token ${bank.accessToken}`)
         // get each account info from plaid
         const accountsResponse = await plaidClient.accountsGet({
           access_token: bank.accessToken,
@@ -67,29 +66,29 @@ export const getAccount = async ({ appwriteItemId }: getAccountProps) => {
   try {
     // get bank from db
     const bank = await getBank({ documentId: appwriteItemId });
-    console.log(`Bank - access token under get account ${bank.accessToken}`)
+
     // get account info from plaid
     const accountsResponse = await plaidClient.accountsGet({
-      access_token: bank?.accessToken,
+      access_token: bank.accessToken,
     });
     const accountData = accountsResponse.data.accounts[0];
 
     // get transfer transactions from appwrite
-    const transferTransactionsData = await getTransactionsByBankId({
-      bankId: bank.$id,
-    });
+    // const transferTransactionsData = await getTransactionsByBankId({
+    //   bankId: bank.$id,
+    // });
 
-    const transferTransactions = transferTransactionsData.documents.map(
-      (transferData: Transaction) => ({
-        id: transferData.$id,
-        name: transferData.name!,
-        amount: transferData.amount!,
-        date: transferData.$createdAt,
-        paymentChannel: transferData.channel,
-        category: transferData.category,
-        type: transferData.senderBankId === bank.$id ? "debit" : "credit",
-      })
-    );
+    // const transferTransactions = transferTransactionsData.documents.map(
+    //   (transferData: Transaction) => ({
+    //     id: transferData.$id,
+    //     name: transferData.name!,
+    //     amount: transferData.amount!,
+    //     date: transferData.$createdAt,
+    //     paymentChannel: transferData.channel,
+    //     category: transferData.category,
+    //     type: transferData.senderBankId === bank.$id ? "debit" : "credit",
+    //   })
+    // );
 
     // get institution info from plaid
     const institution = await getInstitution({
@@ -114,13 +113,14 @@ export const getAccount = async ({ appwriteItemId }: getAccountProps) => {
     };
 
     // sort transactions by date such that the most recent transaction is first
-    const allTransactions = [...transactions, ...transferTransactions].sort(
+      const allTransactions = [...transactions].sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
     );
 
-    // return parseStringify({
-    //   data: account
-    // });
+    return parseStringify({
+      data: account,
+      transactions: allTransactions,
+    });
   } catch (error) {
     console.error("An error occurred while getting the account:", error);
   }

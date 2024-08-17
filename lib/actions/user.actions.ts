@@ -15,6 +15,20 @@ const {
     APPWRITE_BANK_COLLECTION_ID: BANK_COLLECTION_ID
 } = process.env
 
+export const getUserInfo = async ({userId}: getUserInfoProps) => {
+    try {
+        const {database} = await createAdminClient()
+        const user = await database.listDocuments(
+            DATABASE_ID!,
+            USER_COLLECTION_ID!,
+            [Query.equal('userId', [userId])]
+        )
+        return parseStringify(user.documents[0])
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export const signIn = async (userData: signInProps) => {
     try {
         const { account } = await createAdminClient();
@@ -65,8 +79,6 @@ export const signUp = async ({password, ...userData}: SignUpParams) => {
             }
         )
 
-        console.log(`User creation response ${newUserAccount}`)
-
         const session = await account.createEmailPasswordSession(email, password);
 
         cookies().set("banking-core-session", session.secret, {
@@ -84,8 +96,9 @@ export const signUp = async ({password, ...userData}: SignUpParams) => {
 export async function getLoggedInUser() {
     try {
         const { account } = await createSessionClient();
-        const userData = await account.get();
-        return parseStringify(userData)
+        const result = await account.get();
+        const user = await getUserInfo({userId: result.$id})
+        return parseStringify(user)
     } catch (error) {
         console.log(error);
         return null;
@@ -156,7 +169,6 @@ export const exchangePublicToken = async ({ publicToken, user }: exchangePublicT
         })
         const accessToken = response.data.access_token;
         const itemId = response.data.item_id;
-        console.log(`Public access token ${accessToken} - ${itemId}`)
 
         // Get account information from plaid using the access token
         const accountResponse = await plaidClient.accountsGet({
@@ -164,7 +176,6 @@ export const exchangePublicToken = async ({ publicToken, user }: exchangePublicT
         })
 
         const accountData = accountResponse.data.accounts[0]
-        console.log(`Account ${accountData}`)
 
         // Create a processor token for Dwolla using the access token and account ID
     const request: ProcessorTokenCreateRequest = {
@@ -209,7 +220,6 @@ export const exchangePublicToken = async ({ publicToken, user }: exchangePublicT
 }
 
 export const getBanks = async ({userId}: getBanksProps) => {
-    console.log(`Requesting user id ${userId}`)
     try {
         const {database} = await createAdminClient()
         const banks = await database.listDocuments(
