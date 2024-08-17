@@ -98,6 +98,7 @@ export async function getLoggedInUser() {
         const { account } = await createSessionClient();
         const result = await account.get();
         const user = await getUserInfo({userId: result.$id})
+        console.log(`Get Logged iN user ${JSON.stringify(user)}`)
         return parseStringify(user)
     } catch (error) {
         console.log(error);
