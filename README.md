@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Banking SaaS MVP - UI with NextJS 14
+
+This project is a Banking SaaS MVP (Minimum Viable Product) UI built using Next.js 14 and TypeScript. The application is designed to integrate with Plaid and Dwolla for financial data aggregation and payment processing. It also includes Shadcdn for asset delivery and Sentry for error tracking and monitoring.
+
+## Features
+
+- **Next.js 14**
+- **TypeScript**
+- **Shadcdn**
+- **Tailwind CSS**
+- **Plaid Integration**: Securely connects bank accounts and retrieves financial data.
+- **Dwolla Integration**: Manages and processes ACH transfers, bank account verifications, and more.
+- **Sentry**: Error tracking and monitoring for real-time application diagnostics.
+
+## Screenshots
+
+### Dashboard Overview
+![Sign In](screenshots/Screenshot%202024-08-18%20at%2015.10.10.png)
+![Sign Up](screenshots/Screenshot%202024-08-18%20at%2015.16.02.png)
+![Dashboard](screenshots/Screenshot%202024-08-18%20at%2015.11.38.png)
+![Connect Bank Accounts with Plaid](screenshots/Screenshot%202024-08-18%20at%2015.11.54.png)
+![My Bank Accounts](screenshots/Screenshot%202024-08-18%20at%2015.12.33.png)
+![Transaction History](screenshots/Screenshot%202024-08-18%20at%2015.12.53.png)
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+Ensure you have the following installed on your system:
+
+- [Node.js](https://nodejs.org/) (v18.x or higher)
+- [Plaid Sandbox API credentials](https://plaid.com/docs/quickstart/)
+- [Dwolla Sandbox API credentials](https://developers.dwolla.com/guides/)
+
+### Steps to Run
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+$ git clone https://github.com/chinthaka-dinadasa/banking-ui-with-nextjs.git
+
+$ cd banking-ui-with-nextjs
+
+$ cp env-sample .env
+
+$ npm run dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
