@@ -12,16 +12,6 @@ This project is a Banking SaaS MVP (Minimum Viable Product) UI built using Next.
 - **Dwolla Integration**: Manages and processes ACH transfers, bank account verifications, and more.
 - **Sentry**: Error tracking and monitoring for real-time application diagnostics.
 
-## Screenshots
-
-### Dashboard Overview
-![Sign In](screenshots/Screenshot%202024-08-18%20at%2015.10.10.png)
-![Sign Up](screenshots/Screenshot%202024-08-18%20at%2015.16.02.png)
-![Dashboard](screenshots/Screenshot%202024-08-18%20at%2015.11.38.png)
-![Connect Bank Accounts with Plaid](screenshots/Screenshot%202024-08-18%20at%2015.11.54.png)
-![My Bank Accounts](screenshots/Screenshot%202024-08-18%20at%2015.12.33.png)
-![Transaction History](screenshots/Screenshot%202024-08-18%20at%2015.12.53.png)
-
 ## Getting Started
 
 ### Prerequisites
@@ -43,3 +33,12 @@ $ cp env-sample .env
 
 $ npm run dev
 ```
+
+## Screenshots
+
+![Sign In](screenshots/Screenshot%202024-08-18%20at%2015.10.10.png)
+![Sign Up](screenshots/Screenshot%202024-08-18%20at%2015.16.02.png)
+![Dashboard](screenshots/Screenshot%202024-08-18%20at%2015.11.38.png)
+![Connect Bank Accounts with Plaid](screenshots/Screenshot%202024-08-18%20at%2015.11.54.png)
+![My Bank Accounts](screenshots/Screenshot%202024-08-18%20at%2015.12.33.png)
+![Transaction History](screenshots/Screenshot%202024-08-18%20at%2015.12.53.png)
