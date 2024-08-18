@@ -10,6 +10,9 @@ const {
 } = process.env;
 
 export const createTransaction = async (transaction: CreateTransactionProps) => {
+
+  console.log(`Transaction processing ${JSON.stringify(transaction)}`)
+
   try {
     const { database } = await createAdminClient();
 

@@ -11,7 +11,7 @@ import CommonFormInput from "../form/CommonFormInput";
 import { authFormSchema } from "@/lib/utils";
 import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { getLoggedInUser, signIn, signUp } from "@/lib/actions/user.actions";
+import { signIn, signUp } from "@/lib/actions/user.actions";
 import PlaidLink from "../plaid/PlaidLink";
 
 const AuthForm = ({ type }: { type: string }) => {
